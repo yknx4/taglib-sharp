@@ -145,8 +145,8 @@ namespace TagLib {
 		///    cref="AddFileTypeResolver" />.</para>
 		/// </remarks>
 		public delegate File FileTypeResolver (IFileAbstraction abstraction,
-		                                       string mimetype,
-		                                       ReadStyle style);
+											   string mimetype,
+											   ReadStyle style);
 		
 		#endregion
 		
@@ -731,7 +731,7 @@ namespace TagLib {
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		public long Find (ByteVector pattern, long startPosition,
-		                  ByteVector before)
+						  ByteVector before)
 		{
 			if (pattern == null)
 				throw new ArgumentNullException ("pattern");
@@ -848,7 +848,7 @@ namespace TagLib {
 		///    <paramref name="pattern" /> is <see langword="null" />.
 		/// </exception>
 		long RFind (ByteVector pattern, long startPosition,
-		            ByteVector after)
+					ByteVector after)
 		{
 			if (pattern == null)
 				throw new ArgumentNullException ("pattern");
@@ -1275,7 +1275,7 @@ namespace TagLib {
 		///    internal feature of the file crucial to its reading.
 		/// </exception>
 		public static File Create (string path,
-		                           ReadStyle propertiesStyle)
+								   ReadStyle propertiesStyle)
 		{
 			return Create(path, null, propertiesStyle);
 		}
@@ -1307,7 +1307,7 @@ namespace TagLib {
 		///    internal feature of the file crucial to its reading.
 		/// </exception>
 		public static File Create (IFileAbstraction abstraction,
-		                           ReadStyle propertiesStyle)
+								   ReadStyle propertiesStyle)
 		{
 			return Create(abstraction, null, propertiesStyle);
 		}
@@ -1344,7 +1344,7 @@ namespace TagLib {
 		///    internal feature of the file crucial to its reading.
 		/// </exception>
 		public static File Create (string path, string mimetype,
-		                           ReadStyle propertiesStyle)
+								   ReadStyle propertiesStyle)
 		{
 			return Create (new LocalFileAbstraction (path),
 				mimetype, propertiesStyle);
@@ -1383,8 +1383,8 @@ namespace TagLib {
 		///    internal feature of the file crucial to its reading.
 		/// </exception>
 		public static File Create (IFileAbstraction abstraction,
-		                           string mimetype,
-		                           ReadStyle propertiesStyle)
+								   string mimetype,
+								   ReadStyle propertiesStyle)
 		{
 			if(mimetype == null) {
 				string ext = String.Empty;
@@ -1425,7 +1425,7 @@ namespace TagLib {
 				file.MimeType = mimetype;
 				return file;
 			} catch (System.Reflection.TargetInvocationException e) {
-                PrepareExceptionForRethrow(e.InnerException);
+				PrepareExceptionForRethrow(e.InnerException);
 				throw e.InnerException;
 			}
 		}
@@ -1471,19 +1471,19 @@ namespace TagLib {
 			Mode = old_mode;
 		}
 
-        /// <summary>
-        /// Causes the original strack trace of the exception to be preserved when it is rethrown
-        /// </summary>
-        /// <param name="ex"></param>
+		/// <summary>
+		/// Causes the original strack trace of the exception to be preserved when it is rethrown
+		/// </summary>
+		/// <param name="ex"></param>
 		private static void PrepareExceptionForRethrow(Exception ex)
 		{
-            var ctx = new StreamingContext(StreamingContextStates.CrossAppDomain);
-            var mgr = new ObjectManager(null, ctx);
-            var si = new SerializationInfo(ex.GetType(), new FormatterConverter());
+			var ctx = new StreamingContext(StreamingContextStates.CrossAppDomain);
+			var mgr = new ObjectManager(null, ctx);
+			var si = new SerializationInfo(ex.GetType(), new FormatterConverter());
 
-            ex.GetObjectData(si, ctx);
-            mgr.RegisterObject(ex, 1, si); // prepare for SetObjectData
-            mgr.DoFixups(); // ObjectManager calls SetObjectData
+			ex.GetObjectData(si, ctx);
+			mgr.RegisterObject(ex, 1, si); // prepare for SetObjectData
+			mgr.DoFixups(); // ObjectManager calls SetObjectData
 		}
 
 		#endregion
